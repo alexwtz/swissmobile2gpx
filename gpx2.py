@@ -12,8 +12,6 @@ def get_js_urls(url):
     chrome_driver_path = "./chromedriver_mac_arm64/chromedriver"  # Replace with the actual path to chromedriver
 
     # Create a Chrome WebDriver instance with the specified path
-    #driver = webdriver.Chrome(chrome_driver_path)
-    #driver = webdriver.Chrome()
     service = ChromeService(executable_path=chrome_driver_path)
 
     driver = webdriver.Chrome(service=service)
@@ -42,6 +40,7 @@ def get_js_urls(url):
     finally:
         # Close the WebDriver after usage
         driver.quit()
+
 def find_urls_with_pattern(text, pattern):
     # Compile the regular expression pattern
     regex = re.compile(pattern)
@@ -82,6 +81,7 @@ def getJSON(url):
 
 import pyproj
 
+##Visit https://epsg.io/transform to understand the EPSG code
 def utm_to_latlon(utm_easting, utm_northing):
     utm_coordinate_system = pyproj.CRS.from_epsg(21781)  # EPSG code for UTM Zone 32T
     latlon_coordinate_system = pyproj.CRS.from_epsg(4326)  # EPSG code for WGS 84
@@ -105,11 +105,7 @@ if __name__ == "__main__":
     xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
     '''
 
-    #with open("test.json", 'r') as myfile:
-    #   data= json.loads(myfile.read())
-    
     name = data['properties']['name']
-
     profile = data['properties']['profile']
     
     trk='<trk>'
@@ -139,5 +135,5 @@ if __name__ == "__main__":
 
     jsn += '<metadata><name>'+name+'</name><bounds maxlat="'+str(maxLat)+'" maxlon="'+str(maxLon)+'" minlat="'+str(minLat)+'" minlon="'+str(minLon)+'" /></metadata>'
     jsn += trk + '</gpx>'
-    with open("track.gpx", 'w') as myfile:
+    with open(str.replace(name, ' ', '_'), 'w') as myfile:
         myfile.write(jsn)
