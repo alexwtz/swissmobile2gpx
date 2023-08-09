@@ -135,5 +135,5 @@ if __name__ == "__main__":
 
     jsn += '<metadata><name>'+name+'</name><bounds maxlat="'+str(maxLat)+'" maxlon="'+str(maxLon)+'" minlat="'+str(minLat)+'" minlon="'+str(minLon)+'" /></metadata>'
     jsn += trk + '</gpx>'
-    with open(str.replace(name, ' ', '_'), 'w') as myfile:
+    with open(str.replace(name, ' ', '_')+'.gpx', 'w') as myfile:
         myfile.write(jsn)
